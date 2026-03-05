@@ -1,0 +1,30 @@
+﻿name: "fx_replay_analytics"
+version: "1.0.0"
+config-version: 2
+
+profile: "fx_replay_analytics"
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+target-path: "target"
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+models:
+  fx_replay_analytics:
+    staging:
+      +materialized: view
+    intermediate:
+      +materialized: view
+    marts:
+      +materialized: table
+
+seeds:
+  fx_replay_analytics:
+    +quote_columns: false
