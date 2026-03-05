@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: mart_subscription_metrics_daily
+    description: Daily SaaS KPI mart for leadership and growth.
+    columns:
+      - name: date
+        tests: [not_null, unique]
+      - name: daily_active_subscriptions
+        tests: [not_null]
+      - name: trial_to_paid_conversion_rate
+        tests: [not_null]

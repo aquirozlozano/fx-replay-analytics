@@ -83,6 +83,7 @@ purchase_touch as (
     utm_campaign as purchase_campaign,
     is_paid as purchase_is_paid
   from purchase_candidates
+  -- Paid touches win over organic, and same-day touch wins over older lookback touch.
   qualify row_number() over (
     partition by customer_id
     order by is_same_day desc, is_paid desc, event_timestamp desc, coalesce(utm_campaign, '') desc

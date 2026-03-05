@@ -1,16 +1,6 @@
-﻿version: 2
+version: 2
 
 models:
-  - name: stg_ga4_events
-    columns:
-      - name: user_id
-        tests: [not_null]
-      - name: event_name
-        tests:
-          - not_null
-          - accepted_values:
-              values: ['signup', 'start_trial', 'purchase']
-
   - name: stg_chargebee_subscriptions
     columns:
       - name: subscription_id
@@ -35,16 +25,3 @@ models:
         tests:
           - accepted_values:
               values: ['purchase']
-
-  - name: stg_marketing_spend
-    tests:
-      - dbt_utils.unique_combination_of_columns:
-          combination_of_columns: ['spend_date', 'campaign']
-    columns:
-      - name: spend_date
-        tests: [not_null]
-      - name: campaign
-        tests: [not_null]
-      - name: cost
-        tests: [not_null]
-

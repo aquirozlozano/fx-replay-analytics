@@ -18,12 +18,34 @@ clean-targets:
 
 models:
   fx_replay_analytics:
+    +persist_docs:
+      relation: true
+      columns: true
     staging:
       +materialized: view
+      +tags: ["layer:staging"]
+      _legacy:
+        +enabled: false
+      billing:
+        +tags: ["domain:billing"]
+      marketing:
+        +tags: ["domain:marketing"]
+      product:
+        +tags: ["domain:product"]
     intermediate:
       +materialized: view
+      +tags: ["layer:intermediate"]
+      subscriptions:
+        +tags: ["domain:subscriptions"]
+      attribution:
+        +tags: ["domain:attribution"]
     marts:
       +materialized: table
+      +tags: ["layer:marts"]
+      subscriptions:
+        +tags: ["domain:subscriptions"]
+      growth:
+        +tags: ["domain:growth"]
 
 seeds:
   fx_replay_analytics:
@@ -32,4 +54,6 @@ seeds:
 vars:
   reporting_timezone: "UTC"
   eod_incremental_lookback_days: 60
+  reactivation_window_days: 60
   attribution_lookback_days: 30
+  ltv_window_days: 30

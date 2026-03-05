@@ -1,0 +1,40 @@
+selectors:
+  - name: layer_staging
+    definition:
+      method: tag
+      value: layer:staging
+
+  - name: layer_intermediate
+    definition:
+      method: tag
+      value: layer:intermediate
+
+  - name: layer_marts
+    definition:
+      method: tag
+      value: layer:marts
+
+  - name: domain_subscriptions
+    definition:
+      method: tag
+      value: domain:subscriptions
+
+  - name: domain_growth
+    definition:
+      method: tag
+      value: domain:growth
+
+  - name: domain_billing
+    definition:
+      method: tag
+      value: domain:billing
+
+  - name: domain_marketing
+    definition:
+      method: tag
+      value: domain:marketing
+
+  - name: domain_product
+    definition:
+      method: tag
+      value: domain:product

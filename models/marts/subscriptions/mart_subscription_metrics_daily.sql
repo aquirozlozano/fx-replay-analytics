@@ -12,8 +12,8 @@ daily_subscription_metrics as (
     count(distinct case when new_vs_returning_customer_flag = 'new_customer' and status in ('trialing', 'active', 'non_renewing') then subscription_id end) as new_subscriptions,
     count(distinct case when churn_flag = 1 then subscription_id end) as churned_subscriptions,
     sum(coalesce(mrr, 0) - coalesce(prev_mrr, 0)) as net_mrr_change,
-    sum(case when status = 'trialing' and coalesce(prev_status, 'none') != 'trialing' then 1 else 0 end) as trial_starts,
-    sum(case when prev_status = 'trialing' and status = 'active' then 1 else 0 end) as trial_to_paid_conversions
+    sum({{ flag("status = 'trialing' and coalesce(prev_status, 'none') != 'trialing'") }}) as trial_starts,
+    sum({{ flag("prev_status = 'trialing' and status = 'active'") }}) as trial_to_paid_conversions
   from eod
   group by 1
 ),
@@ -23,7 +23,7 @@ daily_spend as (
     spend_date as date,
     sum(cost) as total_spend,
     sum(case
-          when regexp_contains(lower(campaign), r'(paid|brand|retarget|acq|prospecting)') then cost
+          when {{ is_paid_campaign('campaign') }} then cost
           else 0
         end) as paid_spend
   from {{ ref('stg_marketing_spend') }}
@@ -56,12 +56,12 @@ combined as (
     safe_divide(s.total_spend, nullif(n.new_customers, 0)) as cac_blended,
     safe_divide(s.paid_spend, nullif(n.paid_new_customers, 0)) as cac_paid_only,
     safe_divide(
-      sum(m.net_mrr_change) over (order by m.date rows between 29 preceding and current row),
-      nullif(avg(m.daily_active_subscriptions) over (order by m.date rows between 29 preceding and current row), 0)
+      sum(m.net_mrr_change) over (order by m.date rows between {{ var('ltv_window_days', 30) - 1 }} preceding and current row),
+      nullif(avg(m.daily_active_subscriptions) over (order by m.date rows between {{ var('ltv_window_days', 30) - 1 }} preceding and current row), 0)
     ) as arpu_30d,
     safe_divide(
-      sum(m.churned_subscriptions) over (order by m.date rows between 29 preceding and current row),
-      nullif(avg(m.daily_active_subscriptions) over (order by m.date rows between 29 preceding and current row), 0)
+      sum(m.churned_subscriptions) over (order by m.date rows between {{ var('ltv_window_days', 30) - 1 }} preceding and current row),
+      nullif(avg(m.daily_active_subscriptions) over (order by m.date rows between {{ var('ltv_window_days', 30) - 1 }} preceding and current row), 0)
     ) as churn_rate_30d
   from daily_subscription_metrics m
   left join daily_spend s

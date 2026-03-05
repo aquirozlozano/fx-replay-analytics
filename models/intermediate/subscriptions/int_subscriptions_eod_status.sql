@@ -67,14 +67,9 @@ expanded as (
     s.updated_at,
     row_number() over (
       partition by s.customer_id, c.date
+      -- Deterministic tie-break: prioritize active state, then higher mrr, then latest update.
       order by
-        case s.status
-          when 'active' then 1
-          when 'trialing' then 2
-          when 'non_renewing' then 3
-          when 'cancelled' then 4
-          else 99
-        end,
+        {{ subscription_status_priority('s.status') }},
         s.mrr desc,
         s.updated_at desc,
         s.subscription_id desc
