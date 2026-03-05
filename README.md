@@ -1,6 +1,13 @@
 ﻿# fx-replay-analytics (dbt + BigQuery SQL)
 
-Production-style dbt framework for SaaS subscription analytics at FX Replay.
+FX Replay's corporate analytics repository built on dbt, designed to scale with a layered model (staging, intermediate, marts) and strong data governance standards.
+
+# About FX Replay
+FX Replay is a backtesting platform focused on helping traders validate strategies with historical data and realistic market simulation, with a vision to help traders become consistently profitable.
+
+# dbt Objective in This Project
+Implement a reliable transformation and modeling layer to standardize metrics, improve data traceability, and enable consistent analytics for product and business decision-making.
+
 
 ## What This Repository Is
 
@@ -128,6 +135,36 @@ Shared macros:
 - `not_null`, `unique`, `accepted_values` tests in schema YAML
 - singular invariant tests in `tests/`
 - source freshness configuration in `models/staging/_sources.yml`
+
+## Model Monitoring
+
+Recommended production monitoring cadence:
+
+1. Ingestion + staging (high frequency):
+   ```bash
+   dbt source freshness
+   dbt build --selector layer_staging
+   ```
+2. Core logic (high frequency):
+   ```bash
+   dbt build --selector layer_intermediate
+   ```
+3. Business marts (daily or near-real-time, based on SLAs):
+   ```bash
+   dbt build --selector layer_marts
+   ```
+4. Area-specific runs for ownership and incident isolation:
+   ```bash
+   dbt build --selector area_sales
+   dbt build --selector area_marketing
+   dbt build --selector area_account_management
+   ```
+
+Alerting policy:
+
+- Trigger immediate alerts on any `ERROR` from `dbt source freshness`, `dbt run`, or `dbt test`.
+- Escalate repeated `WARN` freshness breaches (for example, 2+ consecutive runs).
+- Add anomaly checks in marts for sharp drops in active subscriptions, spend outages, and abnormal churn spikes.
 
 ## Tradeoffs
 
