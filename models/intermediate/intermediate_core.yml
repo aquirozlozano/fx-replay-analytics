@@ -1,0 +1,38 @@
+﻿version: 2
+
+models:
+  - name: int_subscriptions_eod_status
+    description: End-of-day deterministic subscription state model.
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns: ['customer_id', 'date']
+    columns:
+      - name: customer_id
+        tests: [not_null]
+      - name: date
+        tests: [not_null]
+      - name: status
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['trialing', 'active', 'cancelled', 'non_renewing']
+      - name: is_active
+        tests:
+          - accepted_values:
+              values: [true, false]
+      - name: is_trial
+        tests:
+          - accepted_values:
+              values: [true, false]
+
+  - name: int_subscriptions_eod_enriched
+    description: Lifecycle enrichment over EOD status.
+    columns:
+      - name: customer_id
+        tests: [not_null]
+      - name: date
+        tests: [not_null]
+      - name: new_vs_returning_customer_flag
+        tests:
+          - accepted_values:
+              values: ['new_customer', 'returning_customer', 'existing_customer']

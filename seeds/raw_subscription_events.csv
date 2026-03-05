@@ -1,0 +1,19 @@
+﻿event_id,customer_id,event_timestamp,event_type,plan_id,mrr_delta_usd,mrr_after_event_usd
+E001,C001,2025-10-01 09:00:00,activation,basic,49,49
+E002,C002,2025-10-03 11:00:00,activation,basic,49,49
+E003,C003,2025-10-05 08:30:00,activation,pro,99,99
+E004,C001,2025-10-20 10:00:00,upgrade,pro,50,99
+E005,C004,2025-10-10 14:00:00,activation,basic,49,49
+E006,C005,2025-10-12 16:15:00,activation,basic,49,49
+E007,C002,2025-10-28 13:00:00,cancellation,basic,-49,0
+E008,C006,2025-11-02 09:45:00,activation,basic,49,49
+E009,C003,2025-11-03 10:10:00,downgrade,basic,-50,49
+E010,C007,2025-11-05 12:00:00,activation,pro,99,99
+E011,C008,2025-11-07 08:00:00,activation,basic,49,49
+E012,C001,2025-11-15 15:30:00,cancellation,pro,-99,0
+E013,C009,2025-11-15 17:45:00,activation,basic,49,49
+E014,C002,2025-11-20 09:00:00,reactivation,basic,49,49
+E015,C010,2025-12-01 07:30:00,activation,pro,99,99
+E016,C004,2025-12-03 11:20:00,upgrade,pro,50,99
+E017,C006,2025-12-18 10:40:00,cancellation,basic,-49,0
+E018,C003,2025-12-20 09:10:00,cancellation,basic,-49,0

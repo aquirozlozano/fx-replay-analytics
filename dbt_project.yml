@@ -28,3 +28,8 @@ models:
 seeds:
   fx_replay_analytics:
     +quote_columns: false
+
+vars:
+  reporting_timezone: "UTC"
+  eod_incremental_lookback_days: 60
+  attribution_lookback_days: 30

@@ -1,0 +1,11 @@
+﻿customer_id,signup_date,acquisition_channel,country
+C001,2025-10-01,paid_search,US
+C002,2025-10-03,organic,US
+C003,2025-10-05,affiliate,UK
+C004,2025-10-10,paid_social,CA
+C005,2025-10-12,organic,US
+C006,2025-11-02,paid_search,US
+C007,2025-11-05,affiliate,DE
+C008,2025-11-07,paid_social,US
+C009,2025-11-15,organic,UK
+C010,2025-12-01,paid_search,US

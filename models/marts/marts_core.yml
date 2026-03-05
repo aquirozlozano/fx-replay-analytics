@@ -1,0 +1,30 @@
+﻿version: 2
+
+models:
+  - name: mart_fact_user_attribution
+    description: Per-customer attribution with first touch, trial touch, and purchase touch.
+    columns:
+      - name: customer_id
+        tests: [not_null, unique]
+      - name: first_touch_channel_group
+        tests:
+          - accepted_values:
+              values: ['paid', 'organic']
+      - name: trial_channel_group
+        tests:
+          - accepted_values:
+              values: ['paid', 'organic']
+      - name: purchase_channel_group
+        tests:
+          - accepted_values:
+              values: ['paid', 'organic']
+
+  - name: mart_subscription_metrics_daily
+    description: Daily SaaS KPI mart for leadership and growth.
+    columns:
+      - name: date
+        tests: [not_null, unique]
+      - name: daily_active_subscriptions
+        tests: [not_null]
+      - name: trial_to_paid_conversion_rate
+        tests: [not_null]
