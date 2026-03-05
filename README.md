@@ -18,15 +18,32 @@ Implemented deliverables:
 ```text
 models/
   staging/
+    shared/
     billing/
     marketing/
     product/
+    sales/
+    account_management/
+    finance/
+    support/
   intermediate/
+    shared/
     subscriptions/
     attribution/
+    sales/
+    marketing/
+    account_management/
+    finance/
+    support/
   marts/
     subscriptions/
     growth/
+    sales/
+    marketing/
+    account_management/
+    finance/
+    support/
+    executive/
 macros/
   framework/
 ```
@@ -61,6 +78,19 @@ Selectors are defined in `selectors.yml`.
   - `dbt build --selector domain_billing`
   - `dbt build --selector domain_marketing`
   - `dbt build --selector domain_product`
+  - `dbt build --selector domain_sales`
+  - `dbt build --selector domain_account_management`
+  - `dbt build --selector domain_finance`
+  - `dbt build --selector domain_support`
+- Area runs:
+  - `dbt build --selector area_sales`
+  - `dbt build --selector area_marketing`
+  - `dbt build --selector area_account_management`
+  - `dbt build --selector area_finance`
+  - `dbt build --selector area_support`
+  - `dbt build --selector area_product`
+  - `dbt build --selector area_executive`
+  - `dbt build --selector area_shared`
 
 ## Assumptions
 
@@ -104,6 +134,14 @@ Shared macros:
 - Customer-day EOD chooses one deterministic subscription record; this simplifies exec reporting but does not expose parallel-subscription detail by default.
 - Attribution currently centers on first purchase path; multi-purchase pathing can be added as a follow-up domain extension.
 
+## Multi-Area Governance
+
+- `domain:*` tags are used for data-logic grouping (billing, subscriptions, attribution, etc.).
+- `area:*` tags are used for business ownership and execution slicing (sales, marketing, account management, finance, support, product, executive).
+- New models should include both perspectives through folder placement and inherited tags.
+
 ## Implementation Guide
 
 Detailed step-by-step framework usage is documented in `FRAMEWORK.md`.
+
+Business ownership guidance is documented in `AREA_OWNERSHIP.md`.

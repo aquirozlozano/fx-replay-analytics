@@ -26,26 +26,60 @@ models:
       +tags: ["layer:staging"]
       _legacy:
         +enabled: false
+      shared:
+        +tags: ["area:shared", "domain:shared"]
       billing:
-        +tags: ["domain:billing"]
+        +tags: ["area:finance", "domain:billing"]
       marketing:
-        +tags: ["domain:marketing"]
+        +tags: ["area:marketing", "domain:marketing"]
       product:
-        +tags: ["domain:product"]
+        +tags: ["area:product", "domain:product"]
+      sales:
+        +tags: ["area:sales", "domain:sales"]
+      account_management:
+        +tags: ["area:account_management", "domain:account_management"]
+      finance:
+        +tags: ["area:finance", "domain:finance"]
+      support:
+        +tags: ["area:support", "domain:support"]
     intermediate:
       +materialized: view
       +tags: ["layer:intermediate"]
+      shared:
+        +tags: ["area:shared", "domain:shared"]
       subscriptions:
-        +tags: ["domain:subscriptions"]
+        +tags: ["area:account_management", "domain:subscriptions"]
       attribution:
-        +tags: ["domain:attribution"]
+        +tags: ["area:marketing", "domain:attribution"]
+      sales:
+        +tags: ["area:sales", "domain:sales"]
+      marketing:
+        +tags: ["area:marketing", "domain:marketing"]
+      account_management:
+        +tags: ["area:account_management", "domain:account_management"]
+      finance:
+        +tags: ["area:finance", "domain:finance"]
+      support:
+        +tags: ["area:support", "domain:support"]
     marts:
       +materialized: table
       +tags: ["layer:marts"]
       subscriptions:
-        +tags: ["domain:subscriptions"]
+        +tags: ["area:account_management", "domain:subscriptions"]
       growth:
-        +tags: ["domain:growth"]
+        +tags: ["area:marketing", "domain:growth"]
+      sales:
+        +tags: ["area:sales", "domain:sales"]
+      marketing:
+        +tags: ["area:marketing", "domain:marketing"]
+      account_management:
+        +tags: ["area:account_management", "domain:account_management"]
+      finance:
+        +tags: ["area:finance", "domain:finance"]
+      support:
+        +tags: ["area:support", "domain:support"]
+      executive:
+        +tags: ["area:executive", "domain:executive"]
 
 seeds:
   fx_replay_analytics:

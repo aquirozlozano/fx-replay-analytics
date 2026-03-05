@@ -38,3 +38,63 @@ selectors:
     definition:
       method: tag
       value: domain:product
+
+  - name: domain_sales
+    definition:
+      method: tag
+      value: domain:sales
+
+  - name: domain_account_management
+    definition:
+      method: tag
+      value: domain:account_management
+
+  - name: domain_finance
+    definition:
+      method: tag
+      value: domain:finance
+
+  - name: domain_support
+    definition:
+      method: tag
+      value: domain:support
+
+  - name: area_sales
+    definition:
+      method: tag
+      value: area:sales
+
+  - name: area_marketing
+    definition:
+      method: tag
+      value: area:marketing
+
+  - name: area_account_management
+    definition:
+      method: tag
+      value: area:account_management
+
+  - name: area_finance
+    definition:
+      method: tag
+      value: area:finance
+
+  - name: area_support
+    definition:
+      method: tag
+      value: area:support
+
+  - name: area_product
+    definition:
+      method: tag
+      value: area:product
+
+  - name: area_executive
+    definition:
+      method: tag
+      value: area:executive
+
+  - name: area_shared
+    definition:
+      method: tag
+      value: area:shared

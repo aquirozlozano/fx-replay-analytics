@@ -7,15 +7,26 @@ This repository is structured as a reusable implementation framework for SaaS an
 1. Register raw table in `models/staging/_sources.yml`.
 2. Define `loaded_at_field` + freshness.
 3. Create a staging model in the correct domain folder:
+   - `models/staging/shared`
    - `models/staging/billing`
    - `models/staging/marketing`
    - `models/staging/product`
+   - `models/staging/sales`
+   - `models/staging/account_management`
+   - `models/staging/finance`
+   - `models/staging/support`
 
 ## 2) Add Core Business Logic
 
 1. Build `int_*` models under:
+   - `models/intermediate/shared`
    - `models/intermediate/subscriptions`
    - `models/intermediate/attribution`
+   - `models/intermediate/sales`
+   - `models/intermediate/marketing`
+   - `models/intermediate/account_management`
+   - `models/intermediate/finance`
+   - `models/intermediate/support`
 2. Keep logic stateful and deterministic (window functions + explicit tie-breakers).
 3. For incremental models, always include a late-arrival lookback window.
 
@@ -24,6 +35,12 @@ This repository is structured as a reusable implementation framework for SaaS an
 1. Build `mart_*` models under:
    - `models/marts/subscriptions`
    - `models/marts/growth`
+   - `models/marts/sales`
+   - `models/marts/marketing`
+   - `models/marts/account_management`
+   - `models/marts/finance`
+   - `models/marts/support`
+   - `models/marts/executive`
 2. Keep metric grain explicit and avoid duplicate joins between spend and user-level data.
 
 ## 4) Reuse Macros
@@ -54,3 +71,16 @@ For every new model:
 - By domain:
   - `dbt build --selector domain_subscriptions`
   - `dbt build --selector domain_growth`
+  - `dbt build --selector domain_sales`
+  - `dbt build --selector domain_account_management`
+  - `dbt build --selector domain_finance`
+  - `dbt build --selector domain_support`
+- By area:
+  - `dbt build --selector area_sales`
+  - `dbt build --selector area_marketing`
+  - `dbt build --selector area_account_management`
+  - `dbt build --selector area_finance`
+  - `dbt build --selector area_support`
+  - `dbt build --selector area_product`
+  - `dbt build --selector area_executive`
+  - `dbt build --selector area_shared`
